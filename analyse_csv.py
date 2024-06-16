@@ -2,6 +2,7 @@ import pandas as pd
 
 df = pd.read_csv('data.csv')
 
+# helper function to get a single mean and std
 def getMeanAndStd(break_point, reference_column_name, target_column_name):
     time_series = df[reference_column_name]
     break_index = 0
@@ -15,6 +16,7 @@ def getMeanAndStd(break_point, reference_column_name, target_column_name):
     std = df[target_column_name][:break_index].std()
     return (mean, std)
 
+# function that intake the required start, stop and step as well as the respective column name to produce a new csv file
 def getMeansAndStdsForRange(start, stop, step, reference_column_name, target_column_name):
     mean_column_name ='mean of '+target_column_name
     std_column_name = 'std of ' +target_column_name
