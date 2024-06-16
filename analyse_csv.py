@@ -15,7 +15,26 @@ def getMeanAndStd(break_point, reference_column_name, target_column_name):
     std = df[target_column_name][:break_index].std()
     return (mean, std)
 
+def getMeansAndStdsForRange(start, stop, step, reference_column_name, target_column_name):
+    mean_column_name ='mean of '+target_column_name
+    std_column_name = 'std of ' +target_column_name
+    indexes = []
+    means = []
+    stds = []
+    for i in range(start, stop+1, step):
+        if i == 0: continue
+        mean, std = getMeanAndStd(i, reference_column_name, target_column_name)
+        indexes.append(i)
+        means.append(mean)
+        stds.append(std)
+    df = pd.DataFrame({reference_column_name:indexes,
+                       mean_column_name:means,
+                       std_column_name:stds})
+    df.to_csv('mean_std_result.csv', index=False)
+        
+
 if __name__ == "__main__":
     mean, standard_deviation = getMeanAndStd(16, 'Duration', 'Pulse')
     print(mean)
     print(standard_deviation)
+    getMeansAndStdsForRange(0, 40, 10, 'Duration', 'Pulse')
